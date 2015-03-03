@@ -1,0 +1,12 @@
+{
+  "name": "r2k-addon",
+  "title": "Note in Reader2000",
+  "id": "jid1-bEGO03IsrlFVcw",
+  "description": "Shares content to Reader2000",
+  "author": "",
+  "license": "MPL 2.0",
+  "version": "0.1",
+  "permissions": {
+    "cross-domain-content": ["http://www.reader2000.com", "https://www.reader2000.com"]
+  }
+}
