@@ -1,7 +1,3 @@
-/**
- * Created by kchristmas on 2/27/15.
- */
-
 function requestShareInfo() {
     console.log("sending 'send_info' message from popup.js");
     self.postMessage({'cmd': 'send_info'});
@@ -30,5 +26,13 @@ $(document).ready(function() {
     $iframe.attr("src", bookmarketurl);
     $iframe.on( "load", function(event) {
         requestShareInfo();
+        let contentWindow = $("#__nir-sharebox").find("iframe")[0].contentWindow;
+        contentWindow.addEventListener("submit", function(event) {
+            console.log("form is submitting");
+        });
+        contentWindow.addEventListener("click", function(event) {
+            console.log("click! ", event);
+        });
     });
+
 });

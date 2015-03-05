@@ -26,9 +26,12 @@
         var sel = getSelection();
         if (sel == null) return '';
         try {
-            var w = getSelection().getRangeAt(0).cloneContents();
-            filter_doc_fragment(w);
-            nNd.appendChild(w);
+            for (var i = 0; i < sel.rangeCount; i++) {
+                var w = sel.getRangeAt(i).cloneContents();
+                filter_doc_fragment(w);
+                nNd.appendChild(w);
+            }
+
 
             $(nNd).find(".twitter-tweet").each(function (index, element) {
                 var tweetUrl = $("#" + element.id).contents().find(".tweet").last().attr("cite")
