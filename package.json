@@ -5,7 +5,7 @@
   "description": "Shares content to Reader2000",
   "author": "Kevin Christmas",
   "license": "MPL 2.0",
-  "version": "0.1",
+  "version": "0.2",
   "permissions": {
     "cross-domain-content": ["http://www.reader2000.com", "https://www.reader2000.com"]
   },

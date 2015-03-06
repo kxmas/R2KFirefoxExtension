@@ -14,7 +14,6 @@
     var jq = jQuery.noConflict();
     callback(window, jq);
 })(window, function (window, $) {
-    console.debug("running injection.js");
 
     var get_selection_html = function () {
         if (document.selection) {
@@ -128,7 +127,6 @@
     var sharebox_id = "__nir-sharebox";
 
     var __nir_get_info_from_parent = function () {
-        console.log("starting __nir_get_info_from_parent");
         $("#" + sharebox_id).find("iframe").css('border', 0);
         var selection_html = get_selection_html();
         var empty_selection = ($.trim(selection_html) === '');
@@ -251,7 +249,6 @@
         }
 
         if (hasFirefoxPort()) {
-            console.log("injection.js - sending payload");
             self.postMessage(payload);
         } else {
             console.error("self.port is undefined!");
@@ -268,7 +265,6 @@
                 for (var i = 0; i < selector.length; i++) {
                     var item = document.querySelector(selector[i]);
                     if (item) {
-                        console.log("adding: " + item);
                         share_content.append(item.cloneNode(true));
                     }
                 }
@@ -321,7 +317,6 @@
     }
 
     self.port.on('send_info', function(message) {
-        console.log("injection.js - send_info. got %s", message);
         __nir_get_info_from_parent();
     });
 });
