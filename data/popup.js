@@ -1,7 +1,10 @@
 function requestShareInfo(event) {
-    console.log("sending 'send_info' message from popup.js");
-    self.postMessage({'cmd': 'send_info'});
-    $(event.delegateTarget).off("load", requestShareInfo);
+    console.log("sending 'send_info' message from popup.js. event: ", event);
+    try {
+        self.postMessage({'cmd': 'send_info'});
+    } catch (postMessageErr) {
+        console.log("caught error posting message to iframe. ", postMessageErr);
+    }
 }
 
 function receiveHTMLMessage(event) {
@@ -9,13 +12,14 @@ function receiveHTMLMessage(event) {
         return;
     }
     if (event.data === "hide_sharebox") {
-            var iframe = $("#__nir-sharebox").find("iframe.r2k-iframe")[0];
-            var iframeOnPageLoad = function(pageLoadEvent) {
-                console.log("pageLoadEvent: ", pageLoadEvent);
-                iframe.removeEventListener("load", iframeOnPageLoad, false);
-                self.postMessage(event.data);
-            }
-            iframe.addEventListener("load", iframeOnPageLoad, false);
+        var iframe = $("#__nir-sharebox").find("iframe.r2k-iframe")[0];
+        iframe.removeEventListener("load", requestShareInfo, false);
+        var iframeOnPageLoad = function(pageLoadEvent) {
+            console.log("pageLoadEvent: ", pageLoadEvent);
+            iframe.removeEventListener("load", iframeOnPageLoad, false);
+            self.postMessage(event.data);
+        }
+        iframe.addEventListener("load", iframeOnPageLoad, false);
     } else {
         self.postMessage(event.data);
     }
@@ -34,5 +38,5 @@ $(document).ready(function() {
     console.log("bookmarkleturl: ", bookmarketurl);
     let $iframe = $("iframe.r2k-iframe");
     $iframe.attr("src", bookmarketurl);
-    $iframe.on( "load", requestShareInfo);
+    $iframe.get()[0].addEventListener("load", requestShareInfo, false);
 });
